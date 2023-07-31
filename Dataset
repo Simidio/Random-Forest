@@ -1,0 +1,6 @@
+earnings,employees,sector,failure_rate
+5000000,50,Technology,0.2
+1200000,18,Construction,0.8
+800000,12,Commerce,0.6
+650000,10,Finance,0.5
+1400000,25,Manufacturing,0.7
