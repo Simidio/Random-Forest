@@ -9,24 +9,24 @@ from sklearn.tree import plot_tree
 
 # Create an example dataset with 1000 observations
 data = pd.DataFrame({
-    'fatturato': [5000000, 1200000, 800000, 650000, 1400000] * 200,
-    'numero_dipendenti': [50, 18, 12, 10, 25] * 200,
-    'settore': ['Tecnologia', 'Costruzioni', 'Commercio', 'Servizi', 'Manifatturiero'] * 200,
-    'tasso_fallimento': [0.2, 0.8, 0.6, 0.5, 0.7] * 200
+    'revenue': [5000000, 1200000, 800000, 650000, 1400000] * 200,
+    'num_employees': [50, 18, 12, 10, 25] * 200,
+    'sector': ['Technology', 'Construction', 'Commerce', 'Services', 'Manufacturing'] * 200,
+    'failure_rate': [0.2, 0.8, 0.6, 0.5, 0.7] * 200
 })
 
-# Encode the "settore" variable as binary variables
-data = pd.get_dummies(data, columns=['settore'])
+# Encode the "sector" variable as binary variables
+data = pd.get_dummies(data, columns=['sector'])
 
 # Define a failure threshold
 threshold = 0.5
 
-# Convert the "tasso_fallimento" variable into a binary variable
-data['fallimento'] = (data['tasso_fallimento'] >= threshold).astype(int)
-data = data.drop('tasso_fallimento', axis=1)
+# Convert the "failure_rate" variable into a binary variable
+data['failure'] = (data['failure_rate'] >= threshold).astype(int)
+data = data.drop('failure_rate', axis=1)
 
 # Split the dataset into training and test sets
-X_train, X_test, y_train, y_test = train_test_split(data.drop('fallimento', axis=1), data['fallimento'], test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(data.drop('failure', axis=1), data['failure'], test_size=0.2, random_state=42)
 
 # Create the Random Forest model with 500 trees
 rf = RandomForestClassifier(n_estimators=500, random_state=42)
@@ -58,13 +58,13 @@ print(classification_report(y_test, y_pred))
 
 # Load the test data
 new_data = pd.DataFrame({
-    'fatturato': [4000000, 900000, 700000, 600000, 1300000],
-    'numero_dipendenti': [40, 15, 9, 8, 20],
-    'settore': ['Tecnologia', 'Costruzioni', 'Commercio', 'Servizi', 'Manifatturiero'],
+    'revenue': [4000000, 900000, 700000, 600000, 1300000],
+    'num_employees': [40, 15, 9, 8, 20],
+    'sector': ['Technology', 'Construction', 'Commerce', 'Services', 'Manufacturing'],
 })
 
-# Encode the "settore" variable as binary variables
-new_data = pd.get_dummies(new_data, columns=['settore'])
+# Encode the "sector" variable as binary variables
+new_data = pd.get_dummies(new_data, columns=['sector'])
 
 # Make predictions on the new observations
 y_pred = rf.predict(new_data)
